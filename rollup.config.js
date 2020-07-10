@@ -26,9 +26,8 @@ export default {
 				root: `${__dirname}/src`,
 				extensions: ['.js', '.ts'],
 			}),
-			typescript({
-				typescript: require('typescript')
-			}),
+			json(),
+			typescript(),
 			replace({
 				'process.browser': true,
 				'process.env.NODE_ENV': JSON.stringify(mode)
@@ -79,10 +78,8 @@ export default {
 				root: `${__dirname}/src`,
 				extensions: ['.js', '.ts'],
 			}),
-			typescript({
-				typescript: require('typescript')
-			}),
 			json(),
+			typescript(),
 			replace({
 				'process.browser': false,
 				'process.env.NODE_ENV': JSON.stringify(mode)
