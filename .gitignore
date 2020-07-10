@@ -6,4 +6,3 @@ yarn-error.log
 /__sapper__/
 
 .vercel
-src/firebase.json
