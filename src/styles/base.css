@@ -1,0 +1,31 @@
+:root {
+  @apply font-sans font-light text-lg;
+}
+
+h1 {
+  @apply text-4xl;
+}
+
+h2 {
+  @apply text-2xl;
+}
+
+h3 {
+  @apply text-xl;
+}
+
+h1, h2, h3 {
+  @apply font-extrabold my-2;
+}
+
+p a {
+  @apply text-blue-600 underline;
+}
+
+p {
+  @apply mb-4;
+}
+
+ol {
+  @apply list-decimal list-inside ml-4 mb-4;
+}
