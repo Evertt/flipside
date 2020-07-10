@@ -1,4 +1,4 @@
-import db from '../../firestore'
+import db from '../../firestore.js'
 import { Request, Response } from 'express'
 
 const postsRef = db.collection('posts')
