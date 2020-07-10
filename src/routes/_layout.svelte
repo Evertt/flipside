@@ -16,7 +16,7 @@
 <style global>
 	@import '../styles/tailwind.css';
 
-	body > #main {
+	#main {
 		@apply mt-8;
 		max-width: 52rem;
 	}

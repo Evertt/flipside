@@ -9,6 +9,7 @@ import pkg from './package.json';
 import autoPreprocess from 'svelte-preprocess';
 import rootImport from 'rollup-plugin-root-import'
 import typescript from 'rollup-plugin-typescript2';
+import json from '@rollup/plugin-json';
 
 const mode = process.env.NODE_ENV;
 const dev = mode === 'development';
@@ -81,6 +82,7 @@ export default {
 			typescript({
 				typescript: require('typescript')
 			}),
+			json(),
 			replace({
 				'process.browser': false,
 				'process.env.NODE_ENV': JSON.stringify(mode)

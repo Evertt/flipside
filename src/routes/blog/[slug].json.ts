@@ -1,17 +1,21 @@
-import DB from '../../database'
+import db from '../../firestore'
 import { Request, Response } from 'express'
+
+const postsRef = db.collection('posts')
 
 export async function get(req: Request, res: Response, next: any) {
 	const { slug } = req.params
 
-	const post = await DB.postRepo.findOne({slug})
+	const snapshot = await postsRef
+		.where('slug', '==', slug).get()
 
-	if (post) {
+	if (!snapshot.empty) {
 		res.writeHead(200, {
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Cache-Control': 's-maxage=1, stale-while-revalidate'
 		})
 
-		res.end(JSON.stringify(post))
+		res.end(JSON.stringify(snapshot.docs[0].data()))
 	} else {
 		res.writeHead(404, {
 			'Content-Type': 'application/json'

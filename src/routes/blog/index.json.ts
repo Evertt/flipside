@@ -1,17 +1,18 @@
+import db from '../../firestore'
 import { Request, Response } from 'express'
-import DB from '../../database'
-import Post from '../../entities/Post'
-// import posts from './_posts'
+
+const postsRef = db.collection('posts')
 
 export async function get(req: Request, res: Response) {
-    res.writeHead(200, {
-        'Content-Type': 'application/json'
-    });
-
-    const posts = await DB.postRepo.findAll()
-    const contents = posts.map((post: Post) => ({
-        title: post.title, slug: post.slug
+    const snapshot = await postsRef.get()
+    const contents = snapshot.docs.reverse().map((post: any) => ({
+        title: post.get('title'), slug: post.get('slug')
     }))
+
+    res.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Cache-Control': 's-maxage=1, stale-while-revalidate'
+    })
 
     res.end(JSON.stringify(contents));
 }
