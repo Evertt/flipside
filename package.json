@@ -9,7 +9,7 @@
     "start": "node __sapper__/build",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "test": "run-p --race dev cy:run"
+    "test": "npm run build && run-p --race start cy:run"
   },
   "dependencies": {
     "compression": "^1.7.1",
@@ -30,6 +30,7 @@
     "@rollup/plugin-replace": "^2.2.0",
     "@types/express": "^4.17.7",
     "cssnano": "^4.1.10",
+    "cypress": "^4.10.0",
     "npm-run-all": "^4.1.5",
     "postcss-import": "^12.0.1",
     "postcss-nested": "^4.2.2",
