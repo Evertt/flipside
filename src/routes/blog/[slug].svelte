@@ -20,7 +20,7 @@
 </div>
 
 <script>
-	export let post;
+	export let post
 </script>
 
 <style>
