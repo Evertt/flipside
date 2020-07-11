@@ -1,9 +1,11 @@
 <script context="module">
-	export async function preload() {
-		const resp = await this.fetch('blog.json')
-		const posts = await resp.json()
+	import { posts } from '/store'
+	import { first } from 'rxjs/operators'
 
-		return { posts }
+	export async function preload() {
+		const preloaded = await posts.pipe(first()).toPromise()
+
+		return { preloaded }
 	}
 </script>
 
@@ -14,7 +16,7 @@
 <h1>Recent posts</h1>
 
 <ul>
-	{#each posts as post}
+	{#each ($posts || preloaded) as post}
 		<li>
 			<a href="/blog/{post.slug}" rel="prefetch">
 				{post.title}
@@ -24,7 +26,7 @@
 </ul>
 
 <script>
-	export let posts
+	export let preloaded = []
 </script>
 
 <style>
