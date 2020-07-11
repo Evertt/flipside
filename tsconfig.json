@@ -5,9 +5,8 @@
     "strict": true,
     "target": "es2015",
     "module": "es2015",
-    "lib": ["es5", "es6", "dom"],
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true
+    "lib": ["es5", "es6", "dom"],
+    "experimentalDecorators": true
   }
 }

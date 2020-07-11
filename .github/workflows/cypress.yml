@@ -39,3 +39,4 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FIREBASE_ADMIN_AUTH: ${{ secrets.FIREBASE_ADMIN_AUTH }}

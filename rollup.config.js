@@ -1,3 +1,4 @@
+import fs from 'fs'
 import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import commonjs from '@rollup/plugin-commonjs';
@@ -16,6 +17,9 @@ const dev = mode === 'development';
 const legacy = !!process.env.SAPPER_LEGACY_BUILD;
 
 const onwarn = (warning, onwarn) => (warning.code === 'CIRCULAR_DEPENDENCY' && /[/\\]@sapper[/\\]/.test(warning.message)) || onwarn(warning);
+
+const firebaseCredentials = process.env.FIREBASE_ADMIN_AUTH
+	|| fs.readFileSync(`${__dirname}/firebase.json`)
 
 export default {
 	client: {
@@ -82,7 +86,8 @@ export default {
 			typescript(),
 			replace({
 				'process.browser': false,
-				'process.env.NODE_ENV': JSON.stringify(mode)
+				'process.env.NODE_ENV': JSON.stringify(mode),
+				'process.env.FIREBASE_ADMIN_AUTH': firebaseCredentials
 			}),
 			svelte({
 				generate: 'ssr',
