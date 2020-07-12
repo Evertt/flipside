@@ -1,12 +1,23 @@
 <div class="messages" bind:this={div} on:scroll={toggleAutoScroll}>
   {#each messages as message}
-    <Message {message} {me} />
+    <div class="clearfix" on:dblclick={() => requestEdit(message)}>
+      <Message {message} {me} />
+    </div>
   {/each}
 </div>
 
 <script>
   import { tick, onMount } from 'svelte'
   import Message from './_message.svelte'
+  import { createEventDispatcher } from 'svelte'
+
+  const dispatch = createEventDispatcher()
+
+  const requestEdit = message => {
+    if (message.author === me) {
+      dispatch('edit', message)
+    }
+  }
 
   export let me, messages = []
 

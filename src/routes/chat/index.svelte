@@ -10,18 +10,32 @@
   <SignIn {name} />
 {:else}
   <div class="chat">
-    <Messages messages={$messages} me={$name} />
-    <NewMessage save={messages.add} me={$name} />
+    <Messages messages={$messages} me={$name} on:edit={startEdit} />
+    {#if editingMessage}
+      <MessageInput me={editingMessage.author}
+                    draft={editingMessage.body}
+                    save={update(editingMessage)}
+                    cancel={() => editingMessage = null} />
+    {:else}
+      <MessageInput me={$name} save={messages.add} />
+    {/if}
   </div>
 {/if}
 
 <script>
   import SignIn from './_sign-in.svelte'
   import Messages from './_messages.svelte'
-  import NewMessage from './_new-message.svelte'
+  import MessageInput from './_message-input.svelte'
   import { writable } from 'svelte-persistent-store/dist/session'
 
   const name = writable('name', '')
+  let editingMessage = null
+  const startEdit = e => editingMessage = e.detail
+
+  const update = originalMessage => newMessage => {
+    originalMessage.body = newMessage.body
+    editingMessage = null
+  }
 </script>
 
 <style>
