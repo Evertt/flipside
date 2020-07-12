@@ -6,10 +6,9 @@
   let newName = ''
 
   const saveName = key => {
-    // Only save on enter key
-    if (key.code !== 'Enter') return
-
-    $name = newName
+    if (key.code === 'Enter') {
+      $name = newName
+    }
   }
 </script>
 
