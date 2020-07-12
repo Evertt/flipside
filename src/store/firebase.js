@@ -1,7 +1,3 @@
-import { authState } from 'rxfire/auth'
-import { filter } from 'rxjs/operators'
-import { collectionData } from './rxfire'
-
 let fb, firebaseConfig
 
 if (process.browser) {
@@ -31,11 +27,5 @@ if (process.browser) {
 
 const app = fb.initializeApp(firebaseConfig)
 
-const user = authState(app.auth()).pipe(filter(user => user !== null))
-const db = app.firestore()
+export const db = app.firestore()
 if (db.enablePersistence) db.enablePersistence()
-
-const postsRef = db.collection('posts')
-const posts = collectionData(postsRef)
-
-export { user, posts, db, collectionData }

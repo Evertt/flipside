@@ -1,49 +1,33 @@
 <script context="module">
-  import { first } from 'rxjs/operators'
-  import { db, collectionData } from '/store'
-  import { writable } from 'svelte-persistent-store/dist/session'
+  import { collection, preloader } from '/store'
 
-  const name = writable('name', '')
-  const messagesRef = db.collection('messages')
-  const messages = collectionData(
-    messagesRef.orderBy('created')
-  )
+  const messages = collection('messages').orderBy('created')
 
-  export async function preload() {
-    const preloaded = await messages.pipe(first()).toPromise()
-
-    return { preloaded }
-  }
+  export const preload = preloader(messages)
 </script>
 
 {#if !$name}
-  <input bind:value={newName} on:keyup={saveName} placeholder="Please fill in your name" />
+  <SignIn {name} />
 {:else}
-  {#each ($messages || preloaded) as message}
-    <div>{message.body}</div>
-  {/each}
-
-  <input bind:value={newMessage} on:keyup={addMessage} placeholder="Write your message" />
+  <div class="chat">
+    <Messages messages={$messages} me={$name} />
+    <NewMessage save={messages.add} me={$name} />
+  </div>
 {/if}
 
 <script>
-  let newName = '', newMessage = '', preloaded = []
+  import SignIn from './_sign-in.svelte'
+  import Messages from './_messages.svelte'
+  import NewMessage from './_new-message.svelte'
+  import { writable } from 'svelte-persistent-store/dist/session'
 
-  const saveName = e => {
-    if (e.code === 'Enter') {
-      $name = newName
-    }
-  }
-
-  const addMessage = e => {
-    if (e.code === 'Enter') {
-      messagesRef.add({
-        author: $name,
-        body: newMessage,
-        created: new Date()
-      })
-
-      newMessage = ''
-    }
-  }
+  const name = writable('name', '')
 </script>
+
+<style>
+  .chat {
+    @apply flex flex-col h-full mx-auto bg-gray-300 p-4 -mt-4 bg-opacity-25;
+    max-width: 50rem;
+    max-height: calc(100vh - 110px);
+  }
+</style>

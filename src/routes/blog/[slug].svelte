@@ -1,12 +1,8 @@
 <script context="module">
-	import { posts } from '/store'
-	import { first } from 'rxjs/operators'
+	import { collection, preloader } from '/store'
 
-	export async function preload({ params }) {
-		const preloaded = await posts.pipe(first()).toPromise()
-
-		return { post: preloaded.find(post => post.slug === params.slug) }
-	}
+	const posts = collection('posts')
+	export const preload = preloader(posts)
 </script>
 
 <svelte:head>
@@ -20,7 +16,10 @@
 </div>
 
 <script>
-	export let post
+	export let slug
+	let post
+
+	$: post = $posts.find(post => post.slug === slug)
 </script>
 
 <style>

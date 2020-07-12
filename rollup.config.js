@@ -28,7 +28,7 @@ export default {
 		plugins: [
 			rootImport({
 				root: `${__dirname}/src`,
-				extensions: ['.js', '.ts'],
+				extensions: ['.js', '/index.js', '.ts'],
 			}),
 			json(),
 			typescript(),
@@ -80,7 +80,7 @@ export default {
 		plugins: [
 			rootImport({
 				root: `${__dirname}/src`,
-				extensions: ['.js', '.ts'],
+				extensions: ['.js', '/index.js', '.ts'],
 			}),
 			json(),
 			typescript(),

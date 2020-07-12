@@ -1,12 +1,8 @@
 <script context="module">
-	import { posts } from '/store'
-	import { first } from 'rxjs/operators'
+	import { collection, preloader } from '/store'
 
-	export async function preload() {
-		const preloaded = await posts.pipe(first()).toPromise()
-
-		return { preloaded }
-	}
+	const posts = collection('posts')
+	export const preload = preloader(posts)
 </script>
 
 <svelte:head>
@@ -16,7 +12,7 @@
 <h1>Recent posts</h1>
 
 <ul>
-	{#each ($posts || preloaded) as post}
+	{#each $posts as post}
 		<li>
 			<a href="/blog/{post.slug}" rel="prefetch">
 				{post.title}
@@ -24,10 +20,6 @@
 		</li>
 	{/each}
 </ul>
-
-<script>
-	export let preloaded = []
-</script>
 
 <style>
 	ul {
