@@ -3,7 +3,7 @@
 
 name: Cypress Tests
 
-on: [push]
+on: [push, pull_request]
   # push:
     # branches: [ master, develop ]
   # pull_request:
@@ -16,14 +16,14 @@ jobs:
 
     strategy:
       matrix:
-        node: [10, 12, 14]
+        node-version: [12] # Or test on multiple node versions with [10, 12, 14]
 
-    name: E2E on Node v${{ matrix.node }}
+    name: E2E on Node v${{ matrix.node-version }}
     steps:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node }}
+          node-version: ${{ matrix.node-version }}
       - run: node -v
 
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           record: true
-          tag: node-${{ matrix.node }}
+          tag: node-${{ matrix.node-version }}
           build: npm run build
           start: npm run start
         env:
