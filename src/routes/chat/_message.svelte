@@ -12,12 +12,12 @@
 
 <style>
   .message {
-    @apply bg-blue-200 rounded pp-2 mb-2 inline-block self-start bg-opacity-50;
+    @apply bg-blue-200 rounded pp-2 mb-2 inline-block float-left bg-opacity-50;
     max-width: calc(100% - 4rem)
   }
 
   .mine {
-    @apply self-end bg-green-200 bg-opacity-50;
+    @apply float-right bg-green-200 bg-opacity-50;
   }
 
   .author {

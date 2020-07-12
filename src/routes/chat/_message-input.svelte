@@ -1,23 +1,27 @@
 <input placeholder="Write your message"
-       bind:value={newMessage}
+       bind:value={draft}
        on:keyup={addMessage}
+       autofocus
 />
 
 <script>
-  export let me, save
-  let newMessage = ''
+  export let me, save, cancel = () => {}, draft = ''
 
   const addMessage = key => {
+    if (key.code === 'Escape') {
+      return cancel()
+    }
+
     // Only save on enter key
     if (key.code !== 'Enter') return
 
     save({
       author: me,
-      body: newMessage,
+      body: draft,
       created: new Date()
     })
 
-    newMessage = ''
+    draft = ''
   }
 </script>
 

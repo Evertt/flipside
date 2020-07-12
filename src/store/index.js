@@ -10,7 +10,14 @@ export function collection(ref, query) {
   const store = readable([], set => {
     const unsubscribe = query.onSnapshot(
       snapshot => set(snapshot.docs.map(
-        doc => doc.data()
+        doc => new Proxy(doc.data(), {
+          set(target, prop, newValue) {
+            return ref.doc(doc.id).update({
+              [prop]: newValue,
+              updated: new Date()
+            })
+          }
+        })
       ))
     )
 
