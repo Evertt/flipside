@@ -38,4 +38,4 @@ if (db.enablePersistence) db.enablePersistence()
 const postsRef = db.collection('posts')
 const posts = collectionData(postsRef)
 
-export { db, user, posts }
+export { user, posts, db, collectionData }

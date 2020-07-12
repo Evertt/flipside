@@ -12,7 +12,8 @@
 	const nav = {
 		home: '/',
 		about: '/about',
-		blog: '/blog'
+		blog: '/blog',
+		chat: '/chat',
 	}
 
 	const current = (segment = '', page = '') =>
