@@ -1,6 +1,6 @@
 <div class="messages" bind:this={div} on:scroll={toggleAutoScroll}>
   {#each messages as message}
-    <div class="clearfix" on:dblclick={() => requestEdit(message)}>
+    <div on:dblclick={() => requestEdit(message)}>
       <Message {message} {me} />
     </div>
   {/each}
@@ -9,46 +9,45 @@
 <script>
   import { tick, onMount } from 'svelte'
   import Message from './_message.svelte'
-  import { createEventDispatcher } from 'svelte'
-
-  const dispatch = createEventDispatcher()
 
   const requestEdit = message => {
     if (message.author === me) {
-      dispatch('edit', message)
+      startEdit(message)
     }
   }
 
-  export let me, messages = []
+  export let startEdit, me, messages = []
 
   let div, autoScroll = true
 
-  // This turns off automatic scrolling
-  // if the user manually scrolled up
+  // This toggles automatic scrolling depending
+  // on whether the user manually scrolled up.
   const toggleAutoScroll = () =>
     autoScroll = div.scrollHeight - div.scrollTop - div.clientHeight < 1
 
   const scrollToBottom = async () => {
-    // Don't scroll to the bottom,
-    // if auto scroll is turned off.
-    if (!autoScroll) return
-
     // Wait one tick to make sure the UI is
     // up to date with the latest messages.
-    await tick() 
+    await tick()
     
     div && div.scrollTo(0, div.scrollHeight)
   }
 
-  // Scroll to the bottom on initial load
-  onMount(() => scrollToBottom())
+  onMount(scrollToBottom)
 
-  // And from then on whenever a new message arrives
-  $: scrollToBottom(messages)
+  $: autoScroll && scrollToBottom(messages)
 </script>
 
 <style>
   .messages {
-    @apply flex-shrink flex flex-col text-gray-700 overflow-y-auto mb-4 px-12;
+    @apply flex-shrink flex flex-col text-gray-700 overflow-y-auto mb-4 px-4;
+
+    @screen sm {
+      @apply px-8;
+    }
+
+    @screen md {
+      @apply px-12;
+    }
   }
 </style>

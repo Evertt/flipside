@@ -6,15 +6,23 @@
   export const preload = preloader(messages)
 </script>
 
+<svelte:head>
+  <title>Chat</title>
+</svelte:head>
+
 {#if !$name}
   <SignIn {name} />
 {:else}
   <div class="chat">
-    <Messages messages={$messages} me={$name} on:edit={startEdit} />
+    <Messages messages={$messages} me={$name} {startEdit} />
     {#if editingMessage}
-      <MessageInput me={editingMessage.author}
+      <span>
+        Editing message:
+        <small>(you can also delete it by submitting it empty)</small>
+      </span>
+      <MessageInput save={update}
+                    me={editingMessage.author}
                     draft={editingMessage.body}
-                    save={update(editingMessage)}
                     cancel={() => editingMessage = null} />
     {:else}
       <MessageInput me={$name} save={messages.add} />
@@ -30,17 +38,24 @@
 
   const name = writable('name', '')
   let editingMessage = null
-  const startEdit = e => editingMessage = e.detail
+  const startEdit = message => editingMessage = message
 
-  const update = originalMessage => newMessage => {
-    originalMessage.body = newMessage.body
+  const update = newMessage => {
+    if (newMessage.body === '') {
+      editingMessage.delete()
+    } else {
+      editingMessage.body = newMessage.body
+    }
+
     editingMessage = null
   }
 </script>
 
 <style>
   .chat {
-    @apply flex flex-col h-full mx-auto bg-gray-300 p-4 -mt-4 bg-opacity-25;
+    @apply flex flex-col h-full mx-auto bg-blue-100 p-4 -mt-4
+    bg-opacity-50 rounded border border-gray-300;
+
     max-width: 50rem;
     max-height: calc(100vh - 110px);
   }
