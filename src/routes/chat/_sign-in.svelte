@@ -1,5 +1,5 @@
 <input placeholder="Fill in your name and press enter"
-       bind:value={newName} on:keyup={saveName} />
+       bind:value={newName} on:keyup={saveName} autofocus />
 
 <script>
   export let name
