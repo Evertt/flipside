@@ -46,11 +46,9 @@
   import SignIn from './_sign-in.svelte'
   import Messages from './_messages.svelte'
   import MessageInput from './_message-input.svelte'
-  import { writable } from 'svelte-persistent-store/dist/session'
+  import { writable as cookieStore } from '/store/cookie'
 
-  // TODO: Find out how to actually
-  // store this in a session on the server.
-  const name = writable('name', '')
+  const name = cookieStore('name', '')
 
   /// SAVING NEW MESSAGE FEATURE ///
 
