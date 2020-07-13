@@ -1,6 +1,10 @@
 <script context="module">
 	import { collection, preloader } from '/store'
 
+	// The nice thing about initializing the posts
+	// collection in this module script tag,
+	// is that it is initialized only once.
+	// Even when you navigate to another page and back again.
 	const posts = collection('posts')
 	export const preload = preloader(posts)
 </script>

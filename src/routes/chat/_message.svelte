@@ -2,13 +2,13 @@
   const authors = {}
 </script>
 
-<div class="message" class:mine={message.author === me}>
-  <small class="author {authors[message.author]}">
+<section class="message" class:mine={message.author === me}>
+  <span class="author {authors[message.author]}">
     {message.author}
-  </small>
+  </span>
 
   {message.body}
-</div>
+</section>
 
 <script>
   export let message, me
@@ -40,13 +40,11 @@
 <style>
   .message {
     @apply bg-white rounded-lg pp-2 mb-2 inline-block
-    float-left shadow-sm border border-gray-200;
-
-    max-width: calc(100% - 4rem);
+    float-left shadow-sm border border-gray-200 mr-16;
   }
 
   .mine {
-    @apply float-right bg-green-200 border-green-300;
+    @apply float-right bg-green-200 border-green-300 ml-16 mr-0;
 
     .author {
       @apply hidden;
@@ -54,6 +52,6 @@
   }
 
   .author {
-    @apply block font-medium;
+    @apply text-xs block font-medium;
   }
 </style>
