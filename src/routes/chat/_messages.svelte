@@ -10,20 +10,20 @@
   import { tick, onMount } from 'svelte'
   import Message from './_message.svelte'
 
+  export let startEditing, me, messages = []
+
   const requestEdit = message => {
     if (message.author === me) {
-      startEdit(message)
+      startEditing(message)
     }
   }
-
-  export let startEdit, me, messages = []
 
   let div, autoScroll = true
 
   // This toggles automatic scrolling depending
   // on whether the user manually scrolled up.
-  const toggleAutoScroll = () =>
-    autoScroll = div.scrollHeight - div.scrollTop - div.clientHeight < 1
+  const toggleAutoScroll = () => autoScroll =
+    div.scrollHeight - div.scrollTop - div.clientHeight < 1
 
   const scrollToBottom = async () => {
     // Wait one tick to make sure the UI is
@@ -35,6 +35,8 @@
 
   onMount(scrollToBottom)
 
+  // When auto scrolling is turned on,
+  // scroll to the bottom whenever a new message arrives.
   $: autoScroll && scrollToBottom(messages)
 </script>
 

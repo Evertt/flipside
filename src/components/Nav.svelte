@@ -16,14 +16,16 @@
 		chat: '/chat',
 	}
 
-	const current = (segment = '', page = '') =>
-		segment === page.replace('/', '')
+	// To check if the provided link
+	// links to the current page
+	const isCurrent = href =>
+		segment === href.replace('/', '')
 			? 'page' : undefined
 
-	let links
+	let links = []
 
 	$: links = Object.entries(nav).map(([label, href]) => ({
-		href, label, 'aria-current': current(segment, href)
+		href, label, 'aria-current': isCurrent(href, segment)
 	}))
 </script>
 

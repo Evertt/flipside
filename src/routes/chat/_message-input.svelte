@@ -1,25 +1,27 @@
 <input placeholder="Write your message"
-       bind:value={draft}
+       bind:value={body}
        on:keyup={onKeyUp}
        autofocus
 />
 
 <script>
-  export let me, save, cancel = () => {}, draft = ''
+  export let save
+  export let body = ''
+  export let author = ''
+  export let cancel = () => {}
 
   const onKeyUp = key => {
     switch (key.code) {
       case 'Escape':
-        return cancel();
+        return cancel()
 
       case 'Enter':
         save({
-          author: me,
-          body: draft,
+          body, author,
           created: new Date()
         })
 
-        draft = ''
+        body = ''
     }
   }
 </script>

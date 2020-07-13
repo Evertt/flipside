@@ -16,8 +16,11 @@
 </div>
 
 <script>
+	// The preloader above secretly
+	// exports all the route parameters,
+	// so that's why I can catch the slug here.
 	export let slug
-	let post
+	let post = {}
 
 	$: post = $posts.find(post => post.slug === slug)
 </script>
