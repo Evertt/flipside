@@ -1,29 +1,26 @@
 <script context="module">
-	import { collection, preloader } from '/store'
+	import { collection } from '/store'
 
-	const posts = collection('posts')
-	export const preload = preloader(posts)
+	let post
+
+	export function preload({ params }) {
+		post = collection('posts').where('slug', '==', params.slug).first()
+
+		return new Promise(resolve =>
+			post.subscribe(data => Object.entries(data).length && resolve())
+		)
+	}
 </script>
 
 <svelte:head>
-	<title>{post.title}</title>
+	<title>{$post.title}</title>
 </svelte:head>
 
-<h1>{post.title}</h1>
+<h1>{$post.title}</h1>
 
 <div class='content'>
-	{@html post.html}
+	{@html $post.html}
 </div>
-
-<script>
-	// The preloader above secretly
-	// exports all the route parameters,
-	// so that's why I can catch the slug here.
-	export let slug
-	let post = {}
-
-	$: post = $posts.find(post => post.slug === slug)
-</script>
 
 <style>
 	/*
