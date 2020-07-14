@@ -19,7 +19,7 @@
 	// To check if the provided link
 	// links to the current page
 	const isCurrent = href =>
-		segment === href.replace('/', '')
+		(segment || '') === href.replace('/', '')
 			? 'page' : undefined
 
 	let links = []
