@@ -1,14 +1,12 @@
 <script context="module">
-	import { collection } from '/store'
+	import { collection, makePromise } from '/store'
 
 	let post
 
 	export function preload({ params }) {
 		post = collection('posts').where('slug', '==', params.slug).first()
 
-		return new Promise(resolve =>
-			post.subscribe(data => Object.entries(data).length && resolve())
-		)
+		return makePromise(post)
 	}
 </script>
 

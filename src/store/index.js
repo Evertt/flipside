@@ -82,8 +82,10 @@ export function collection(ref, query, single = false) {
   })
 }
 
-export const preloader = store => ({ params }) => new Promise(
+export const makePromise = (store, params) => new Promise(
   resolve => store.subscribe(
     data => Object.entries(data).length && resolve(params)
   )
 )
+
+export const preloader = store => ({ params }) => makePromise(store, params)
