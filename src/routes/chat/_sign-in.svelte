@@ -14,7 +14,7 @@
 
 <style>
   input {
-    @apply mx-auto block rounded border-solid border border-blue-200 pp-2;
+    @apply block mx-auto rounded border border-blue-200 pp-2;
     width: 17rem;
   }
 </style>

@@ -13,7 +13,7 @@
 
 <style>
 	h1, figure, p {
-		@apply text-center mx-auto;
+		@apply mx-auto text-center;
 	}
 
 	h1 {
@@ -25,7 +25,7 @@
 	}
 
 	img {
-		@apply w-full mb-4 mx-auto;
+		@apply mb-4 mx-auto w-full;
 		max-width: 400px;
 	}
 

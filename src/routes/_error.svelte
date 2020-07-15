@@ -23,7 +23,7 @@
 	}
 
 	h1 {
-		@apply font-bold mb-2;
+		@apply mb-2 font-bold;
 	}
 
 	p {

@@ -81,8 +81,11 @@
 
 <style>
   .chat {
-    @apply flex flex-col h-full mx-auto bg-blue-100 p-4 -mt-4
-    bg-opacity-50 rounded border border-gray-300;
+    @apply flex flex-col
+           -mt-4 mx-auto
+           rounded border border-gray-300
+           h-full p-4
+           bg-blue-100 bg-opacity-50;
 
     max-width: 50rem;
     max-height: calc(100vh - 110px);

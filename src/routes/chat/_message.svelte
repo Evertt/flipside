@@ -39,12 +39,16 @@
 
 <style>
   .message {
-    @apply bg-white rounded-lg pp-2 mb-2 inline-block
-    float-left shadow-sm border border-gray-200 mr-16;
+    @apply float-left inline-block
+           shadow-sm
+           rounded-lg border border-gray-200
+           mr-16 mb-2 pp-2
+           bg-white;
   }
 
   .mine {
-    @apply float-right bg-green-200 border-green-300 ml-16 mr-0;
+    @apply float-right mr-0 ml-16
+           border-green-300 bg-green-200;
 
     .author {
       @apply hidden;
@@ -52,6 +56,6 @@
   }
 
   .author {
-    @apply text-xs block font-medium;
+    @apply block text-xs font-medium;
   }
 </style>

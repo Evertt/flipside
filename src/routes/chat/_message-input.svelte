@@ -28,6 +28,7 @@
 
 <style>
   input {
-    @apply w-full rounded border-solid border border-blue-200 pp-2;
+    @apply rounded border border-blue-200
+           w-full pp-2;
   }
 </style>

@@ -42,7 +42,9 @@
 
 <style>
   .messages {
-    @apply flex-shrink flex flex-col text-gray-700 overflow-y-auto mb-4 px-4;
+    @apply flex flex-col flex-shrink
+           overflow-y-auto mb-4 px-4
+           text-gray-700;
 
     @screen sm {
       @apply px-8;

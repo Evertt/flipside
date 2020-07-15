@@ -39,11 +39,7 @@
 	}
 
 	.content :global(pre) {
-		@apply bg-gray-100 shadow-inner p-2 rounded overflow-x-auto;
-	}
-
-	.content :global(pre) :global(code) {
-		@apply bg-transparent p-0;
+		@apply overflow-x-auto shadow-inner rounded p-2 bg-gray-100;
 	}
 
 	.content :global(ul) {
