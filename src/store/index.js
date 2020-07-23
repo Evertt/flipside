@@ -1,4 +1,5 @@
 import { db } from './firebase'
+import { throttle } from '/utils'
 import { readable } from 'svelte/store'
 
 export function collection(ref, query) {
@@ -25,19 +26,24 @@ export function collection(ref, query) {
   const store = readable([], set => {
     const unsubscribe = query.onSnapshot(
       snapshot => set(snapshot.docs.map(
-        doc => new Proxy(doc.data(), {
-          get(target, prop, receiver) {
-            return prop === 'delete'
-              ? doc.ref.delete.bind(doc.ref)
-              : Reflect.get(...arguments)
-          },
-          set(target, prop, newValue) {
-            return doc.ref.update({
-              [prop]: newValue,
-              updated: new Date()
-            })
-          }
-        })
+        doc => {
+          const update = throttle(target => doc.ref.update({
+            ...target, updated: new Date()
+          }), 100, 500)
+
+          return new Proxy(doc.data(), {
+            get(target, prop, receiver) {
+              return prop === 'delete'
+                ? doc.ref.delete.bind(doc.ref)
+                : Reflect.get(...arguments)
+            },
+            set(target, prop, newValue) {
+              Reflect.set(...arguments)
+              update(target)
+              return true
+            }
+          })
+        }
       ))
     )
 
