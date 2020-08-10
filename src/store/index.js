@@ -31,7 +31,7 @@ export function collection(ref, query) {
             ...target, updated: new Date()
           }), 100, 500)
 
-          return new Proxy(doc.data(), {
+          return new Proxy({ id: doc.id, ...doc.data() }, {
             get(target, prop, receiver) {
               return prop === 'delete'
                 ? doc.ref.delete.bind(doc.ref)
@@ -70,6 +70,7 @@ export function collection(ref, query) {
 
         return function() {
           const newQuery = queryFunc(...arguments)
+
           return collection(ref, newQuery)
         }
       }
