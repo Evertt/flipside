@@ -28,7 +28,7 @@ export function collection(ref, query) {
       snapshot => set(snapshot.docs.map(
         doc => {
           const update = throttle(target => doc.ref.update({
-            ...target, updated: new Date()
+            ...target, updated: new Date
           }), 100, 500)
 
           return new Proxy({ id: doc.id, ...doc.data() }, {
@@ -52,7 +52,7 @@ export function collection(ref, query) {
 
   // We also add an `add` method to our store,
   // which forwards the call to the firestore collection reference.
-  store.add = doc => ref.add(doc)
+  store.add = doc => ref.add({ created: new Date, ...doc })
 
   /**
    * Finally we wrap the entire store in another proxy.

@@ -1,13 +1,11 @@
 <input placeholder="Write your message"
        bind:value={body}
        on:keyup={onKeyUp}
-       autofocus
 />
 
 <script>
   export let save
   export let body = ''
-  export let author = ''
   export let cancel = () => {}
 
   const onKeyUp = key => {
@@ -16,11 +14,7 @@
         return cancel()
 
       case 'Enter':
-        save({
-          body, author,
-          created: new Date()
-        })
-
+        save(body)
         body = ''
     }
   }

@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-  <title>Chat</title>
+  <title>Chat - {slug}</title>
 </svelte:head>
 
 {#if !$name}
@@ -21,21 +21,12 @@
          initiate an edit on one of the current user's messages. -->
     <Messages messages={$messages} me={$name} {startEditing} />
 
-    {#if !editingMessage}
+    <div class="editing-info text-gray-700" class:text-opacity-0={!editingMessage}>
+      Editing message:
+      <small>(you can also delete it by submitting it empty)</small>
+    </div>
 
-    <!-- This is the normal input box for writing new messages -->
-      <MessageInput author={$name} save={saveNewMessage} />
-
-    {:else}
-
-    <!-- And this is for when we're in editing mode -->
-      <span>
-        Editing message:
-        <small>(you can also delete it by submitting it empty)</small>
-      </span>
-      <MessageInput {...editingMessage} save={updateMessage} cancel={stopEditing} />
-
-    {/if}
+    <MessageInput {...editingMessage} {save} cancel={stopEditing} />
   </div>
 
 {/if}
@@ -55,16 +46,8 @@
     .where('room', '==', room)
     .orderBy('created')
 
-  /// SAVING NEW MESSAGE FEATURE ///
-
-  const saveNewMessage = newMessage => {
-    if (newMessage.body !== '') {
-      newMessage.room = room
-      messages.add(newMessage)
-    }
-  }
-
-  /// EDITING MESSAGE FEATURE ///
+  const saveNewMessage = body =>
+    messages.add({ author: $name, body, room })
 
   let editingMessage = false
 
@@ -74,15 +57,23 @@
   const stopEditing = () =>
     editingMessage = false
 
-  const updateMessage = newMessage => {
-    if (newMessage.body === '') {
-      editingMessage.delete()
-    } else {
-      editingMessage.body = newMessage.body
-    }
-
+  const updateMessage = body => {
+    editingMessage.body = body
     stopEditing()
   }
+
+  const deleteMessage = () => {
+    editingMessage.delete()
+    stopEditing()
+  }
+
+  // Choose between saving a new message
+  // or updating an existing message.
+  const save = body => editingMessage.body === undefined
+    ? body && saveNewMessage(body)
+    : body
+      ? updateMessage(body)
+      : deleteMessage()
 </script>
 
 
@@ -96,5 +87,10 @@
 
     max-width: 50rem;
     max-height: calc(100vh - 110px);
+  }
+
+  .editing-info {
+    @apply pt-4 -mt-4 z-10;
+    background: linear-gradient(0deg, rgba(246,251,255,1) 50%, rgba(246,251,255,0) 100%);
   }
 </style>

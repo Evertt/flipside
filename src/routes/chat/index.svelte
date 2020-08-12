@@ -10,17 +10,18 @@
   <title>Chat</title>
 </svelte:head>
 
-{#if !$name}
 
   <!-- We don't have a real authentication flow, but we do
        need to at least have a name of the current user. -->
   <SignIn {name} />
 
-{:else}
+{#if $name}
 
-  <ul>
+  <h2>Rooms</h2>
+
+  <ul class="rooms">
     {#each $rooms as room}
-      <li><a href="/chat/{room.id}">{room.title}</a></li>
+      <li><a href="/chat/{room.id}">&rarr; {room.title}</a></li>
     {/each}
   </ul>
 
@@ -33,3 +34,8 @@
   const name = cookieStore('name', '')
 </script>
 
+<style>
+  .rooms a {
+    @apply text-blue-500 leading-loose;
+  }
+</style>

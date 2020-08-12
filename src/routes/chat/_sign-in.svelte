@@ -1,9 +1,10 @@
-<input placeholder="Fill in your name and press enter"
+<input placeholder="Fill in your name and press enter to save"
        bind:value={newName} on:keyup={saveName} autofocus />
 
 <script>
   export let name
-  let newName = ''
+  let newName
+  $: newName = $name
 
   const saveName = key => {
     if (key.code === 'Enter') {
@@ -15,6 +16,6 @@
 <style>
   input {
     @apply block mx-auto rounded border border-blue-200 pp-2;
-    width: 17rem;
+    width: 20rem;
   }
 </style>
