@@ -42,7 +42,7 @@
     @apply float-left inline-block
            shadow-sm
            rounded-lg border border-gray-200
-           mr-16 mb-2 pp-2
+           mr-16 pp-2 max-h-full overflow-hidden
            bg-white;
   }
 
