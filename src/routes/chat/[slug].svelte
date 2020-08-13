@@ -69,11 +69,12 @@
 
   // Choose between saving a new message
   // or updating an existing message.
-  const save = body => editingMessage.body === undefined
-    ? body && saveNewMessage(body)
-    : body
-      ? updateMessage(body)
-      : deleteMessage()
+  const save = body =>
+    editingMessage.body === undefined
+      ? body && saveNewMessage(body)
+      : body
+        ? updateMessage(body)
+        : deleteMessage()
 </script>
 
 

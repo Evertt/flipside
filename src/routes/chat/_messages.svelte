@@ -2,7 +2,7 @@
   <div class="flip">
     {#each messages as message (message.id)}
       <div class="message" transition:slide|local
-           on:dblclick={() => requestEdit(message)}>
+           on:dblclick={_ => requestEdit(message)}>
         <Message {message} {me} />
       </div>
     {/each}

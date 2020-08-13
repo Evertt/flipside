@@ -1,5 +1,6 @@
 <div class="outer" bind:this={div} on:scroll={scroll}>
-  <div class="inner">
+  <div class="shim" style="height: {h}px"></div>
+  <div class="inner" bind:clientHeight={h}>
     <span>A</span>
     <span>B</span>
     <span>C</span>
@@ -19,7 +20,7 @@
 </div>
 
 <script>
-  let div, y = 0
+  let div, h = 0, y = 0
 
   const scroll = () => {
     if (div) y = div.scrollTop * -2
@@ -37,6 +38,8 @@
 
   div.inner {
     transform: scaleY(-1);
+    position: absolute;
+    top: var(--y);
   }
 
   span {

@@ -1,9 +1,9 @@
 <script context="module">
-  const authors = {}
+  const authorColors = {}
 </script>
 
 <section class="message" class:mine={message.author === me}>
-  <span class="author {authors[message.author]}">
+  <span class="author {authorColors[message.author]}">
     {message.author}
   </span>
 
@@ -27,13 +27,13 @@
 
   /**
    * What's happening here is that we're assigning a color
-   * to each unique author. So that we can make their names
+   * to each author. So that we can make their names
    * visually distinct in the chat box.
    */
-  if (message.author !== me && !authors[message.author]) {
-    const i = Object.keys(authors).length
+  if (message.author !== me && !authorColors[message.author]) {
+    const i = Object.keys(authorColors).length
     const n = colors.length
-    authors[message.author] = colors[i%n]
+    authorColors[message.author] = colors[i%n]
   }
 </script>
 
