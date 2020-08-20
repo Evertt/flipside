@@ -27,9 +27,15 @@ export function collection(ref, query) {
     const unsubscribe = query.onSnapshot(
       snapshot => set(snapshot.docs.map(
         doc => {
-          const update = throttle(target => doc.ref.update({
-            ...target, updated: new Date
-          }), 100, 500)
+          const update = throttle(target => {
+            const data = {
+              ...target, updated: new Date
+            }
+
+            delete data.id
+
+            doc.ref.update(data)
+          }, 100, 500)
 
           return new Proxy({ id: doc.id, ...doc.data() }, {
             get(target, prop, receiver) {

@@ -21,7 +21,7 @@ export function throttle(fn, ...delays) {
 
       // Set a 2nd `Timeout` that resets the
       // active delay back to the first one.
-      setTimeout(() => {
+      t2 = setTimeout(() => {
         activeDelay = 0
         t2 = undefined
       }, delays[activeDelay])
